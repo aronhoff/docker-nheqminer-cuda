@@ -60,7 +60,7 @@ RUN wget \
 # install nicehash
 
 
-RUN git clone https://github.com/nicehash/nheqminer.git \
+RUN git clone https://github.com/aronhoff/nheqminer \
   && chmod +x nheqminer/cpu_xenoncat/asm_linux/* \
   && cd nheqminer/cpu_xenoncat/asm_linux \
   && sh assemble.sh \
