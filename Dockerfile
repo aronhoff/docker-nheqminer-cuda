@@ -1,5 +1,4 @@
 FROM nvidia/cuda:8.0-runtime-ubuntu16.04
-LABEL maintainer "Unsalted"
 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -41,8 +40,8 @@ RUN wget http://downloads.sourceforge.net/project/boost/boost/${boost_version}/$
   && rm ${boost_dir}.tar.gz \
   && cd ${boost_dir} \
   && ./bootstrap.sh --prefix=/usr \
-  && ./b2 -j 4 stage $boost_libs \
-  && ./b2 -j 4 install $boost_libs \
+  && ./b2 -j $(nproc) stage $boost_libs \
+  && ./b2 -j $(nproc) install $boost_libs \
   && cd .. && rm -rf ${boost_dir} && ldconfig
 # install latest version of cmake
 RUN wget \
@@ -55,7 +54,7 @@ RUN wget \
   && tar xzvf cmake-3.7.2.tar.gz \
   && cd cmake-3.7.2/ \
   && ./bootstrap \
-  && make -j4 \
+  && make -j$(nproc) \
   && make install \
   && cd ../
 # install nicehash
